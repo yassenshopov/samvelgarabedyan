@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site-config";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader() {
   return (
@@ -12,12 +13,15 @@ export function SiteHeader() {
         {siteConfig.lastName[0]}
       </a>
 
-      <a
-        href="#contact"
-        className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-accent-orange"
-      >
-        Contact
-      </a>
+      <div className="flex items-center gap-4">
+        <ThemeToggle />
+        <a
+          href="#contact"
+          className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors hover:text-accent-orange"
+        >
+          Contact
+        </a>
+      </div>
     </header>
   );
 }

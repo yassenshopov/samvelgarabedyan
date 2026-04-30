@@ -1,40 +1,13 @@
 import { Parallax } from "@/components/parallax";
+import { MusicBars } from "@/components/music-bars";
 import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 text-center sm:px-10">
-      {/* Aurora ribbons — parallax at slower rate so they lag behind scroll */}
-      <Parallax speed={-0.15} className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0">
-          <div
-            className="absolute top-[38%] left-1/2 h-[350px] w-[120vw] origin-center -translate-x-1/2 rounded-[50%]"
-            style={{
-              background:
-                "radial-gradient(ellipse 100% 100% at 50% 50%, oklch(0.72 0.19 45 / 0.55) 0%, oklch(0.60 0.20 35 / 0.25) 40%, transparent 70%)",
-              animation: "aurora-1 10s ease-in-out infinite",
-              filter: "blur(30px)",
-            }}
-          />
-          <div
-            className="absolute top-[44%] left-[40%] h-[220px] w-[80vw] origin-center rounded-[50%]"
-            style={{
-              background:
-                "radial-gradient(ellipse 100% 100% at 50% 50%, oklch(0.80 0.17 55 / 0.5) 0%, oklch(0.65 0.19 40 / 0.15) 50%, transparent 75%)",
-              animation: "aurora-2 8s ease-in-out infinite",
-              filter: "blur(20px)",
-            }}
-          />
-          <div
-            className="absolute top-[50%] left-[55%] h-[140px] w-[70vw] origin-center rounded-[50%]"
-            style={{
-              background:
-                "radial-gradient(ellipse 100% 100% at 50% 50%, oklch(0.85 0.15 60 / 0.45) 0%, oklch(0.70 0.18 45 / 0.1) 60%, transparent 80%)",
-              animation: "aurora-3 6.5s ease-in-out infinite",
-              filter: "blur(12px)",
-            }}
-          />
-        </div>
+    <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-background px-6 text-center sm:px-10">
+      {/* Music bars background */}
+      <Parallax speed={-0.1} className="pointer-events-none absolute inset-0">
+        <MusicBars className="absolute inset-0 h-full w-full" />
       </Parallax>
 
       {/* Grid overlay */}
@@ -45,7 +18,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 45%, transparent 20%, oklch(0.10 0 0) 100%)",
+            "radial-gradient(ellipse 80% 70% at 50% 45%, transparent 20%, var(--color-hero-bg) 100%)",
         }}
       />
 
