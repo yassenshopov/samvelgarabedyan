@@ -3,12 +3,23 @@
 import { useEffect, useRef } from "react";
 
 const BAR_COUNT = 48;
-const MIN_HEIGHT = 0.05;
-const MAX_HEIGHT = 0.95;
+const MIN_HEIGHT = 0.03;
+const MAX_HEIGHT = 0.45;
 
-function seededRandom(i: number, t: number) {
-  const x = Math.sin(i * 127.1 + t * 0.0008) * 43758.5453;
-  return x - Math.floor(x);
+function getAccentColor(el: HTMLElement): [number, number, number] {
+  const probe = document.createElement("div");
+  probe.style.color = "var(--accent-orange)";
+  probe.style.position = "absolute";
+  probe.style.visibility = "hidden";
+  el.appendChild(probe);
+  const computed = getComputedStyle(probe).color;
+  el.removeChild(probe);
+
+  const match = computed.match(/(\d+\.?\d*)/g);
+  if (match && match.length >= 3) {
+    return [Number(match[0]), Number(match[1]), Number(match[2])];
+  }
+  return [200, 100, 30];
 }
 
 export function MusicBars({ className }: { className?: string }) {
@@ -20,22 +31,15 @@ export function MusicBars({ className }: { className?: string }) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
 
-    const speeds = Array.from({ length: BAR_COUNT }, (_, i) =>
-      0.6 + seededRandom(i, 0) * 1.4,
-    );
-    const phases = Array.from({ length: BAR_COUNT }, (_, i) =>
-      seededRandom(i + 100, 0) * Math.PI * 2,
-    );
-    const freqs = Array.from({ length: BAR_COUNT }, (_, i) =>
-      0.8 + seededRandom(i + 200, 0) * 0.6,
-    );
+    let accentRgb: [number, number, number] = getAccentColor(canvas);
+    let colorCheckFrame = 0;
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas!.getBoundingClientRect();
       canvas!.width = rect.width * dpr;
       canvas!.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     resize();
@@ -47,38 +51,47 @@ export function MusicBars({ className }: { className?: string }) {
       if (!startTime) startTime = timestamp;
       const t = timestamp - startTime;
 
-      const { width, height } = canvas!.getBoundingClientRect();
+      const rect = canvas!.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+      if (w === 0 || h === 0) {
+        rafRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
       const dpr = window.devicePixelRatio || 1;
-      ctx.clearRect(0, 0, width * dpr, height * dpr);
+      ctx.clearRect(0, 0, w * dpr, h * dpr);
 
-      const gap = 3;
-      const totalGaps = (BAR_COUNT - 1) * gap;
-      const barWidth = (width - totalGaps) / BAR_COUNT;
+      colorCheckFrame++;
+      if (colorCheckFrame % 60 === 0) {
+        accentRgb = getAccentColor(canvas!);
+      }
 
-      const style = getComputedStyle(canvas!);
-      const color = style.getPropertyValue("--bar-color").trim() || "oklch(0.70 0.17 50)";
+      const barWidth = w / BAR_COUNT;
+      const radius = 2;
+      const [r, g, b] = accentRgb;
+
+      const isDark = document.documentElement.classList.contains("dark");
+      const alpha = isDark ? 0.2 : 0.08;
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
 
       for (let i = 0; i < BAR_COUNT; i++) {
-        const wave1 = Math.sin(t * 0.001 * speeds[i] + phases[i]) * 0.5 + 0.5;
-        const wave2 =
-          Math.sin(t * 0.0006 * freqs[i] + phases[i] * 1.7) * 0.5 + 0.5;
-        const wave3 =
-          Math.sin(t * 0.0003 + i * 0.15) * 0.5 + 0.5;
+        const pos = i / (BAR_COUNT - 1);
 
-        const centerBias = 1 - Math.abs((i / (BAR_COUNT - 1)) * 2 - 1);
+        const wave1 = Math.sin(t * 0.0012 + pos * Math.PI * 3) * 0.5 + 0.5;
+        const wave2 = Math.sin(t * 0.0008 + pos * Math.PI * 5) * 0.5 + 0.5;
+
+        const centerBias = 1 - Math.abs(pos * 2 - 1);
         const centerWeight = 0.3 + centerBias * 0.7;
 
-        const raw = (wave1 * 0.5 + wave2 * 0.3 + wave3 * 0.2) * centerWeight;
-        const h =
-          (MIN_HEIGHT + raw * (MAX_HEIGHT - MIN_HEIGHT)) * height;
+        const raw = (wave1 * 0.6 + wave2 * 0.4) * centerWeight;
+        const barH = (MIN_HEIGHT + raw * (MAX_HEIGHT - MIN_HEIGHT)) * h;
 
-        const x = i * (barWidth + gap);
-        const y = (height - h) / 2;
+        const x = i * barWidth;
+        const y = (h - barH) / 2;
 
-        const alpha = 0.25 + raw * 0.55;
-        ctx.fillStyle = color.replace(")", ` / ${alpha})`).replace("oklch(", "oklch(");
         ctx.beginPath();
-        ctx.roundRect(x, y, barWidth, h, barWidth / 2);
+        ctx.roundRect(x, y, barWidth, barH, radius);
         ctx.fill();
       }
 
@@ -93,15 +106,5 @@ export function MusicBars({ className }: { className?: string }) {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className={className}
-      style={
-        {
-          "--bar-color": "var(--accent-orange)",
-        } as React.CSSProperties
-      }
-    />
-  );
+  return <canvas ref={canvasRef} className={className} />;
 }

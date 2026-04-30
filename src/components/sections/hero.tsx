@@ -1,4 +1,3 @@
-import { Parallax } from "@/components/parallax";
 import { MusicBars } from "@/components/music-bars";
 import { siteConfig } from "@/lib/site-config";
 
@@ -6,9 +5,7 @@ export function Hero() {
   return (
     <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-background px-6 text-center sm:px-10">
       {/* Music bars background */}
-      <Parallax speed={-0.1} className="pointer-events-none absolute inset-0">
-        <MusicBars className="absolute inset-0 h-full w-full" />
-      </Parallax>
+      <MusicBars className="pointer-events-none absolute inset-0 h-full w-full" />
 
       {/* Grid overlay */}
       <div className="hero-grid pointer-events-none absolute inset-0" />
@@ -28,7 +25,7 @@ export function Hero() {
           Making music since {siteConfig.sinceYear}
         </p>
 
-        <h1 className="font-display leading-[0.85] tracking-tight text-accent-orange drop-shadow-[0_0_40px_oklch(0.70_0.17_50_/_0.3)]">
+        <h1 className="font-display leading-[0.85] tracking-tight text-accent-orange">
           <span className="block text-[clamp(4rem,15vw,12rem)]">
             {siteConfig.firstName}
           </span>
