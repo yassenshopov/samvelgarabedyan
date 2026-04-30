@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +13,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas-neue",
+  weight: "400",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Samvel Garabedyan",
-  description: "Personal website of Samvel Garabedyan",
+  title: "Samvel Garabedyan — Music Composer",
+  description:
+    "Bulgarian music composer crafting evocative scores for film, games, and media.",
+  openGraph: {
+    title: "Samvel Garabedyan — Music Composer",
+    description:
+      "Bulgarian music composer crafting evocative scores for film, games, and media.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
