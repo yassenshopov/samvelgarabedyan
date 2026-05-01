@@ -15,14 +15,25 @@ export function Music() {
           </div>
         </Parallax>
 
-        <div className="relative w-full overflow-hidden rounded-lg" style={{ paddingBottom: "56.25%" }}>
-          <iframe
-            src={siteConfig.reelCrafterUrl}
-            className="absolute inset-0 h-full w-full border-0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            title={`${siteConfig.name} — Music Reel`}
-          />
+        <iframe
+          src={siteConfig.reelCrafterUrl}
+          className="w-full rounded-lg border-0"
+          height="400"
+          scrolling="no"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          title={`${siteConfig.name} — Music Reel`}
+        />
+
+        <div className="mt-6 text-center">
+          <a
+            href={siteConfig.fullReelUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-accent-orange"
+          >
+            View full reel &rarr;
+          </a>
         </div>
       </div>
     </section>

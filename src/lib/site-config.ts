@@ -6,7 +6,8 @@ export const siteConfig = {
   sinceYear: 2020, // TODO: replace with actual year
   bio: "I'm Samvel Garabedyan, a Bulgarian music composer crafting evocative scores for film, games, and media. Whether it's an intimate scene or an epic orchestral moment — I bring stories to life through music.", // TODO: replace with real bio
   reelCrafterUrl:
-    "https://player.reelcrafter.com/embed/TODO-replace-with-real-id", // TODO: replace with real ReelCrafter embed URL
+    "https://play.reelcrafter.com/embed/f98de4bb-bb5a-45ae-ada1-ffeca7131ae2",
+  fullReelUrl: "https://play.reelcrafter.com/gqicb_hvQIG4oVk4EejQ6w",
   portrait: "/samvel.jpg", // TODO: add actual photo to public/samvel.jpg
   email: "samvel@example.com", // TODO: replace with real email
   socials: [
