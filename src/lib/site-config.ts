@@ -13,8 +13,7 @@ export const siteConfig = {
   email: "samvel.garabedyan@gmail.com",
   socials: [
     { platform: "instagram" as const, url: "https://instagram.com/maestrosamvel" },
-    { platform: "youtube" as const, url: "https://youtube.com/@TODO" }, // TODO
-    { platform: "linkedin" as const, url: "https://linkedin.com/in/TODO" }, // TODO
+    { platform: "youtube" as const, url: "https://www.youtube.com/@samigar143" },
   ],
 } as const;
 

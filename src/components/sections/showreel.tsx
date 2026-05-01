@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export function Showreel() {
   return (
-    <section className="px-6 py-24 sm:px-10">
+    <section id="showreel" className="px-6 py-24 sm:px-10">
       <div className="mx-auto max-w-5xl">
         <Parallax speed={0.08}>
           <div className="mb-12 flex items-center gap-4">
