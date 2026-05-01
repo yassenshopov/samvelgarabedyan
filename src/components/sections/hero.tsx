@@ -1,4 +1,5 @@
 import { MusicBars } from "@/components/music-bars";
+import { Parallax } from "@/components/parallax";
 import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
@@ -19,21 +20,23 @@ export function Hero() {
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
-        <p className="mb-6 text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-          Making music since {siteConfig.sinceYear}
-        </p>
+      {/* Content — parallax so it drifts slower than the scroll */}
+      <Parallax speed={0.15} className="relative z-10">
+        <div className="flex flex-col items-center">
+          <p className="mb-6 text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
+            Making music since {siteConfig.sinceYear}
+          </p>
 
-        <h1 className="font-display leading-[0.85] tracking-tight text-accent-orange">
-          <span className="block text-[clamp(4rem,15vw,12rem)]">
-            {siteConfig.firstName}
-          </span>
-          <span className="block text-[clamp(4rem,15vw,12rem)]">
-            {siteConfig.lastName}
-          </span>
-        </h1>
-      </div>
+          <h1 className="font-display leading-[0.85] tracking-tight text-accent-orange">
+            <span className="block text-[clamp(4rem,15vw,12rem)]">
+              {siteConfig.firstName}
+            </span>
+            <span className="block text-[clamp(4rem,15vw,12rem)]">
+              {siteConfig.lastName}
+            </span>
+          </h1>
+        </div>
+      </Parallax>
 
       {/* Scroll cue */}
       <div className="absolute bottom-10 z-10 flex flex-col items-center gap-2">
