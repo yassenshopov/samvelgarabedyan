@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/sections/hero";
 import { Bio } from "@/components/sections/bio";
+import { Showreel } from "@/components/sections/showreel";
 import { Music } from "@/components/sections/music";
 import { Contact } from "@/components/sections/contact";
 
@@ -12,6 +13,7 @@ export default function Home() {
       <main>
         <Hero />
         <Bio />
+        <Showreel />
         <Music />
         <Contact />
       </main>
